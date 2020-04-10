@@ -105,6 +105,11 @@ def main():
             player_motion.x = 0
             PLAYER_COLOR = RED
 
+        if player_loc.x > SCREEN_WIDTH + PLAYER_RADIUS * 2:
+            player_loc.x = - PLAYER_RADIUS * 2
+        elif player_loc.x < - PLAYER_RADIUS * 2:
+            player_loc.x = SCREEN_WIDTH + PLAYER_RADIUS * 2
+
         pygame.draw.circle(screen, PLAYER_COLOR, player_loc, PLAYER_RADIUS)
         player_loc.move(player_motion)
         pygame.display.update()
