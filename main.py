@@ -25,7 +25,7 @@ BULLETS_WIDTH = 5
 BULLETS_HEIGHT = 10
 #enemies
 ENEMY_RANDIUS = 10
-NUMBER_OF_ENEMIES = 50
+NUMBER_OF_ENEMIES = 25
 ENEMY_SPEED = 1
 ENEMY_COLOR = BLACK
 X_RANGE_MIN = ENEMY_RANDIUS
@@ -73,9 +73,9 @@ def main():
                 done = True
             if not end:
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT and player_loc.x > PLAYER_RADIUS:
+                    if event.key == pygame.K_LEFT:
                         player_motion.x = -PLAYER_SPEED
-                    elif event.key == pygame.K_RIGHT and player_loc.x < SCREEN_WIDTH - PLAYER_RADIUS:
+                    elif event.key == pygame.K_RIGHT:
                         player_motion.x = PLAYER_SPEED
                     elif event.key == pygame.K_SPACE:
                         bullets.append(player_loc.copy())
@@ -88,12 +88,17 @@ def main():
         draw_bullets(bullets, bullet_motion, screen)
         for enemy in enemies:
             for bullet in bullets:
-                if (enemy.x - ENEMY_RANDIUS) < (bullet.x - BULLETS_WIDTH) and (enemy.x + ENEMY_RANDIUS) > bullet.x and enemy.y >= bullet.y:
+                if (enemy.x - ENEMY_RANDIUS) < bullet.x and (enemy.x + ENEMY_RANDIUS) > (bullet.x - BULLETS_WIDTH) and enemy.y >= bullet.y:
                     enemies.remove(enemy)
                     bullets.remove(bullet)
             if enemy.y >= SCREEN_HEIGHT:
                 end = True
-        
+
+        if len(enemies) == 0:
+            enemy_motion.y = 0
+            bullet_motion.y = 0
+            player_motion.x = 0
+
         if end:
             enemy_motion.y = 0
             bullet_motion.y = 0
@@ -108,7 +113,6 @@ def main():
 if __name__ == "__main__":
     main()
     pygame.quit()
-
 
 #any player meets end dead
 #bullet hit enmy enemy dead
