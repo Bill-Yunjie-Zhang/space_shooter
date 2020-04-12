@@ -69,6 +69,7 @@ def main():
     score = 0
     font = pygame.font.SysFont(None, 24)
     score_render = font.render("Score: %i" %(score), True, RED)
+    lost_render = font.render("YOU LOST, KEEP TRYING", True, RED)
 
     player_loc = freegames.vector(PLAYER_INITIAL_X_LOCATION, PLAYER_INITIAL_Y_LOCATION)
     player_motion = freegames.vector(0, 0)
@@ -134,6 +135,7 @@ def main():
             bullet_motion.y = 0
             player_motion.x = 0
             player_motion.y = 0
+            screen.blit(lost_render, (10, 40))
 
         if player_loc.x > SCREEN_WIDTH + PLAYER_WIDTH:
             player_loc.x = - PLAYER_WIDTH
